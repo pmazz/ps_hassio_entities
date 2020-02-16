@@ -1,10 +1,9 @@
 # Hassio Entities Script
 
-[![hacs_badge](https://img.shields.io/badge/Platform-Home%20Assistant-blue.svg)](https://github.com/hacs/integration)
+[![hass_badge](https://img.shields.io/badge/Platform-Home%20Assistant-blue.svg)](https://www.home-assistant.io)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
 [![GitHub Release](https://img.shields.io/github/release/pmazz/ps_hassio_entities.svg)](https://github.com/pmazz/ps_hassio_entities/releases)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/pmazz/ps_hassio_entities.svg)](https://github.com/pmazz/ps_hassio_entities/commits)
-[![GitHub Downloads](https://img.shields.io/github/downloads/pmazz/ps_hassio_entities/total.svg)](https://github.com/pmazz/ps_hassio_entities)
 
 Python script for Home Assistant to handle state and attributes of existing sensors and entities.
 Useful if you need to change a sensor's state or attribute from whithin a script, an automation, or your Lovelace UI.
