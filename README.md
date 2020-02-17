@@ -24,13 +24,20 @@ This script use Home Assistant [python_script](https://www.home-assistant.io/int
 | attributes | list | List of attributes to be set (the actual list of attributes depends on the referred entity) |
 | log_enabled | bool | Indicates whether to log system messages to the Home Assistant log |
 
+**Important**: In addition to the `log_enabled` parameter, make sure the [Logger](https://www.home-assistant.io/components/logger) component has been configured in your `configuration.yaml` (log level must be at least `debug`).
+
+```yaml
+logger:
+  logs:
+    homeassistant.components.python_script: debug
+```
+
 ### Lovelace Sample
 
 ![Sample](images/sample.gif)
 
 ```yaml
 - type: entities
-  show_header_toggle: false
   entities:
     - switch.smartplug_2
     - type: section
