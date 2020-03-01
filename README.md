@@ -1,4 +1,4 @@
-# Hassio Entities Script
+# Home Assistant Entities Script
 
 [![hass_badge](https://img.shields.io/badge/Platform-Home%20Assistant-blue.svg)](https://www.home-assistant.io)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/hacs/integration)
@@ -18,7 +18,7 @@ This script use Home Assistant [python_script](https://www.home-assistant.io/int
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | string | (Required) Allowed options: `set_state`, `set_attributes`, `set_state_attributes` |
+| action | string | (Required) Allowed options: <br>`set_state` - allows to set a sensor state only<br>`set_attributes` - allows to set a sensor attributes only<br>`set_state_attributes` - allows to set both state and attributes |
 | entity_id | string | Entity ID of the sensor to be set |
 | state | string | The state to be set |
 | attributes | list | List of attributes to be set (the actual list of attributes depends on the referred entity) |
@@ -34,19 +34,21 @@ logger:
 
 ### Lovelace Sample
 
-![Sample](images/sample.gif)
+#### Set both state and attributes
+
+![Sample](sample.gif)
 
 ```yaml
 - type: entities
   entities:
-    - switch.smartplug_2
+    - sensor.mysensor
     - type: section
     - type: call-service
       name: "Set Windy"
       service: python_script.hass_entities
       service_data:
         action: set_state_attributes
-        entity_id: switch.smartplug_2
+        entity_id: sensor.mysensor
         state: "3.02"
         attributes:
           - icon: mdi:weather-windy
@@ -58,11 +60,63 @@ logger:
       service: python_script.hass_entities
       service_data:
         action: set_state_attributes
-        entity_id: switch.smartplug_2
+        entity_id: sensor.mysensor
         state: 30
         attributes:
           - icon: mdi:weather-rainy
           - friendly_name: Rainy
           - unit_of_measurement: mm/h
+        log_enabled: True
+```
+
+#### Set state only
+
+```yaml
+- type: entities
+  entities:
+    - sensor.mysensor
+    - type: section
+    - type: call-service
+      name: "Set Windy State"
+      service: python_script.hass_entities
+      service_data:
+        action: set_state
+        entity_id: sensor.mysensor
+        state: "3.02"
+        log_enabled: True
+    - type: call-service
+      name: "Set Rainy State"
+      service: python_script.hass_entities
+      service_data:
+        action: set_state
+        entity_id: sensor.mysensor
+        state: 30
+        log_enabled: True
+```
+
+#### Set attributes only
+
+```yaml
+- type: entities
+  entities:
+    - sensor.mysensor
+    - type: section
+    - type: call-service
+      name: "Set Windy Icon"
+      service: python_script.hass_entities
+      service_data:
+        action: set_attributes
+        entity_id: sensor.mysensor
+        attributes:
+          - icon: mdi:weather-windy
+        log_enabled: True
+    - type: call-service
+      name: "Set Rainy Icon"
+      service: python_script.hass_entities
+      service_data:
+        action: set_attributes
+        entity_id: sensor.mysensor
+        attributes:
+          - icon: mdi:weather-rainy
         log_enabled: True
 ```
