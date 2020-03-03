@@ -16,25 +16,17 @@ This script use Home Assistant [python_script](https://www.home-assistant.io/int
 
 ## Usage
 
+### Set both state and attributes
+
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| action | string | (Required) Allowed options: <br>`set_state` - allows to set a sensor state only<br>`set_attributes` - allows to set a sensor attributes only<br>`set_state_attributes` - allows to set both state and attributes |
-| entity_id | string | Entity ID of the sensor to be set |
-| state | string | The state to be set |
-| attributes | list | List of attributes to be set (the actual list of attributes depends on the referred entity) |
-| log_enabled | bool | Indicates whether to log system messages to the Home Assistant log |
+| action | string | (*Required*) `set_state_attributes` Allows to set both state and attributes |
+| entity_id | string | (*Required*) Entity ID of the sensor to be set |
+| state | string | (*Required*) The state to be set |
+| attributes | list | (*Required*) List of attributes to be set (the actual list of attributes depends on the referred entity) |
+| log_enabled | bool | Indicates whether to log system messages to the Home Assistant log (see [Logging](#logging) for further details) |
 
-**Important**: In addition to the `log_enabled` parameter, make sure the [Logger](https://www.home-assistant.io/components/logger) component has been configured in your `configuration.yaml` (log level must be at least `debug`).
-
-```yaml
-logger:
-  logs:
-    homeassistant.components.python_script: debug
-```
-
-### Lovelace Sample
-
-#### Set both state and attributes
+**Lovelace Sample**:
 
 ![Sample](sample.gif)
 
@@ -69,7 +61,16 @@ logger:
         log_enabled: True
 ```
 
-#### Set state only
+### Set state only
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| action | string | (*Required*) `set_state` Allows to set a sensor state only |
+| entity_id | string | (*Required*) Entity ID of the sensor to be set |
+| state | string | (*Required*) The state to be set |
+| log_enabled | bool | Indicates whether to log system messages to the Home Assistant log (see [Logging](#logging) for further details) |
+
+**Lovelace Sample**:
 
 ```yaml
 - type: entities
@@ -94,7 +95,16 @@ logger:
         log_enabled: True
 ```
 
-#### Set attributes only
+### Set attributes only
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| action | string | (*Required*) `set_attributes` Allows to set a sensor attributes only |
+| entity_id | string | (*Required*) Entity ID of the sensor to be set |
+| attributes | list | (*Required*) List of attributes to be set (the actual list of attributes depends on the referred entity) |
+| log_enabled | bool | Indicates whether to log system messages to the Home Assistant log (see [Logging](#logging) for further details) |
+
+**Lovelace Sample**:
 
 ```yaml
 - type: entities
@@ -119,4 +129,40 @@ logger:
         attributes:
           - icon: mdi:weather-rainy
         log_enabled: True
+```
+
+### Delete an existing attribute
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| action | string | (*Required*) `delete_attribute` Delete an existing attribute |
+| entity_id | string | (*Required*) Entity ID of the sensor to be set |
+| attribute | string | (*Required*) Attribute to be deleted from the sensor definition |
+| log_enabled | bool | Indicates whether to log system messages to the Home Assistant log (see [Logging](#logging) for further details) |
+
+**Lovelace Sample**:
+
+```yaml
+- type: entities
+  entities:
+    - sensor.mysensor
+    - type: section
+    - type: call-service
+      name: "Set Windy Icon"
+      service: python_script.hass_entities
+      service_data:
+        action: delete_attribute
+        entity_id: sensor.mysensor
+        attribute: icon
+        log_enabled: True
+```
+
+## Logging
+
+**Important**: In addition to the `log_enabled` parameter, make sure the [Logger](https://www.home-assistant.io/components/logger) component has been configured in your `configuration.yaml` (log level must be at least `debug`).
+
+```yaml
+logger:
+  logs:
+    homeassistant.components.python_script: debug
 ```
