@@ -19,7 +19,7 @@ A clear and concise question here.
 If applicable, add your screenshots here.
 
 **Version**
-What is the version of the script? (available in HACS and in browser developer console - F12)
+What is the version of the script?
 
 **Additional information**
 Add any other relevant additional information here.
